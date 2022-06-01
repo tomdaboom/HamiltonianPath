@@ -28,11 +28,13 @@ def generateSuccessor(path : List[int], n : int) -> List[int] :
     return out
 
 #Choose a path from two candidate paths on a graph, given a temperature
-def which(graph : MatrixGraph, 
+def which(
+    graph : MatrixGraph, 
     temp : float, 
     oldPath : List[int], 
     newPath : List[int], 
-    report : bool) -> List[int] :
+    report : bool
+    ) -> List[int] :
     
     h = graph.heuristic(oldPath)
     h2 = graph.heuristic(newPath)
