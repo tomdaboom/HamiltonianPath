@@ -1,17 +1,19 @@
 import random
 from copy import copy
 import math
+from typing import List
 
 from graph import *
 
 #Generate a start path on n vertices
-def generateInitial(n):
+#Paths represented as a list of integers
+def generateInitial(n : int) -> List[int] :
     nodes = [i for i in range(n)]
     random.shuffle(nodes)
     return nodes
 
 #Generate the successor of path on n vertices
-def generateSuccessor(path, n):
+def generateSuccessor(path : List[int], n : int) -> List[int] :
     i = random.randint(0, n-1)
     j = i
     while i == j:
@@ -26,7 +28,12 @@ def generateSuccessor(path, n):
     return out
 
 #Choose a path from two candidate paths on a graph, given a temperature
-def which(graph, temp, oldPath, newPath, report):
+def which(graph : MatrixGraph, 
+    temp : float, 
+    oldPath : List[int], 
+    newPath : List[int], 
+    report : bool) -> List[int] :
+    
     h = graph.heuristic(oldPath)
     h2 = graph.heuristic(newPath)
 
@@ -47,11 +54,11 @@ def which(graph, temp, oldPath, newPath, report):
     return oldPath
 
 #The cooling schedule for our graph
-def coolingSchedule(temp):
+def coolingSchedule(temp : float) -> float :
     return temp * 0.9999
 
 #Run simulated annealing
-def anneal(graph, maxiters, startTemp):
+def anneal(graph : MatrixGraph, maxiters : int, startTemp : float) -> List[int]:
     #Initialise n, starting candidate path and temperature
     n = graph.n
     currentState = generateInitial(n)
@@ -85,9 +92,12 @@ if __name__ == "__main__":
     for i in range(2500):
         g.connect(random.randint(0, 99), random.randint(0, 99))
 
-    #Find number of edges and degree of a sample vertex
+    #Find number of edges and degrees of a sample vertices
     print("|E| = ", g.countEdges())
-    print("∃v : deg(v) = ", g.getDegree(random.randint(0, 99)), "\n")
+    print("∃v1 : deg(v1) = ", g.getDegree(random.randint(0, 99)))
+    print("∃v2 : deg(v2) = ", g.getDegree(random.randint(0, 99)))
+    print("∃v3 : deg(v3) = ", g.getDegree(random.randint(0, 99)))
+    print()
     
     #Run simulated annealing
     path = anneal(g, 100000, 1)
