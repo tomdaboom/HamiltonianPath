@@ -106,8 +106,14 @@ if __name__ == "__main__":
 
     #Present the best path found
     print("\nPath:")
-    print(path[0], end = '')
-    for p in path[1:]:
-        print(' ->', p, end = '')
+    for i in range(len(path)-1):
+        print(path[i], end = '')
+
+        if g.connected(path[i], path[i+1]):
+            print(" -> ", end = '')
+        else:
+            print(" /> ", end = '')
+    print(path[i+1])
+
     print('\n\nh(p) = ', g.heuristic(path))
 
